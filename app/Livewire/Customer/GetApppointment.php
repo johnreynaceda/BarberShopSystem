@@ -4,8 +4,11 @@ namespace App\Livewire\Customer;
 
 use App\Models\Barber;
 use App\Models\Service;
+use App\Models\Appointment;
+
 use App\Models\ServiceCategory;
 use App\Models\Shop;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class GetApppointment extends Component
@@ -42,5 +45,20 @@ class GetApppointment extends Component
     public function previewRecord(){
         sleep(2);
         $this->preview_modal = true;
+    }
+
+    public function submitAppointment(){
+        sleep(1);
+        Appointment::create([
+            'shop_id' => $this->shop_id,
+            'service_id' => $this->services_id,
+            'barber_id' => $this->barber_id,
+            'user_id' => auth()->user()->id,
+            'date' => Carbon::parse($this->date_of_appointment),
+            'mode_of_payment' => $this->mode_of_payment,
+            'customer_type' => 'Online',
+        ]);
+
+        return redirect()->route('customer.appointments');
     }
 }

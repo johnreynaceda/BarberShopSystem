@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function customerInformation(){
         return $this->hasOne(CustomerInformation::class);
     }
+
+    public function appointments(){
+        return $this->hasMany(Appointment::class);
+    }
 }

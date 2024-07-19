@@ -47,7 +47,9 @@ Route::prefix('customer')->group(function(){
     Route::get('/barber-shops/{id}', function(){
         return view('customer.get-appointment');
     })->name('customer.get-appointment');
-
+    Route::get('/appointments', function(){
+        return view('customer.appointments');
+    })->name('customer.appointments');
 });
 
 

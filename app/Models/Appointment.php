@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Barber extends Model
+class Appointment extends Model
 {
     use HasFactory;
     protected $guarded = [];
@@ -14,11 +14,15 @@ class Barber extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function barber(){
+        return $this->belongsTo(Barber::class);
+    }
+
     public function shop(){
         return $this->belongsTo(Shop::class);
     }
 
-    public function appointments(){
-        return $this->hasMany(Appointment::class);
+    public function service(){
+        return $this->belongsTo(Service::class);
     }
 }

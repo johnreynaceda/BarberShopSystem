@@ -23,8 +23,8 @@
                             href="{{ route('customer.dashboard') }}">Home </a>
                         <a class="{{ request()->routeIs('customer.barber-shops') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
                             href="{{ route('customer.barber-shops') }}">Barber Shops </a>
-                        <a class="px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                            href="#features">Appointments</a>
+                        <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                            href="{{ route('customer.appointments') }}">Appointments</a>
                         <a class="px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
                             href="#features">Notifications</a>
                     </div>

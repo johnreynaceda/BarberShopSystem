@@ -13,4 +13,8 @@ class Service extends Model
     public function serviceCategory(){
         return $this->belongsTo(ServiceCategory::class);
     }
+
+    public function appointments(){
+        return $this->hasMany(Appointment::class);
+    }
 }

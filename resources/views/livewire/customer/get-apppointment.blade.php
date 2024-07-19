@@ -99,7 +99,7 @@
             <div>
                 <h1 class="text-gray-300">Please choose the date and time...</h1>
                 <div class="w-80">
-                    <x-datetime-picker wire:model.live="date_of_appointment" label="Appointment Date"
+                    <x-datetime-picker wire:model.live="date_of_appointment" without-timezone label="Appointment Date"
                         placeholder="Appointment Date" />
 
                 </div>
@@ -107,7 +107,7 @@
             </div>
             @if ($date_of_appointment)
                 <div class="mt-10">
-                    <x-button label="Sumbit Appointment" class="font-medium" right-icon="check" positive
+                    <x-button label="Preview Appointment" class="font-medium" right-icon="check" positive
                         wire:click="previewRecord" spinner="previewRecord" />
                 </div>
             @endif
@@ -117,7 +117,7 @@
     @default
 @endswitch
 
-<x-modal name="preview_modal" wire:model.defer="preview_modal">
+<x-modal name="preview_modal" wire:model.defer="preview_modal" align="center">
     <x-card title="PREVIEW APPOINTMENT">
         <div class="2xl:w-[30rem]">
             <div class="w-full grid grid-cols-4 gap-2">
@@ -158,7 +158,7 @@
         <x-slot name="footer" class="flex justify-end gap-x-4">
             <x-button flat label="Cancel" x-on:click="close" />
 
-            <x-button primary label="I Agree" wire:click="agree" />
+            <x-button primary label="Submit Appointment" wire:click="submitAppointment" spinner="submitAppointment" slate />
         </x-slot>
     </x-card>
 </x-modal>
