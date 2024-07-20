@@ -99,8 +99,7 @@
             <div>
                 <h1 class="text-gray-300">Please choose the date and time...</h1>
                 <div class="w-80">
-                    <x-datetime-picker wire:model.live="date_of_appointment" without-timezone label="Appointment Date"
-                        placeholder="Appointment Date" />
+                    <x-datetime-picker wire:model.live="date_of_appointment" without-timezone placeholder="Appointment Date" />
 
                 </div>
 
@@ -133,7 +132,7 @@
                 <h1 class="col-span-2">Name:</h1>
                 <h1 class="col-span-2">{{ auth()->user()->name }}</h1>
                 <h1 class="col-span-2">Address:</h1>
-                <h1 class="col-span-2">{{ auth()->user()->customerInformation->address }}</h1>
+                <h1 class="col-span-2">{{ auth()->user()->customerInformation->address ?? '' }}</h1>
                 <h1 class="col-span-2">Date & Time:</h1>
                 <h1 class="col-span-2">{{ \Carbon\Carbon::parse($date_of_appointment ?? '')->format('F d, Y H:i A') }}
                 </h1>
@@ -158,7 +157,8 @@
         <x-slot name="footer" class="flex justify-end gap-x-4">
             <x-button flat label="Cancel" x-on:click="close" />
 
-            <x-button primary label="Submit Appointment" wire:click="submitAppointment" spinner="submitAppointment" slate />
+            <x-button primary label="Submit Appointment" wire:click="submitAppointment" spinner="submitAppointment"
+                slate />
         </x-slot>
     </x-card>
 </x-modal>

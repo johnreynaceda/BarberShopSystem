@@ -22,7 +22,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased overflow-x-hidden">
 
     <main class="bg-gradient-to-br from-gray-500  to-gray-700">
         <livewire:navbar />
@@ -34,7 +34,7 @@
                 class="absolute text-stroke font-mont text-stroke-md opacity-10 text-gray-500 top-40 font-extrabold text-[10rem] -left-80">
                 STYLESYNC
             </div>
-            <div class="px-8 py-20  mx-auto  relative md:px-12 lg:px-32 max-w-7xl">
+            <div class="2xl:px-8 px-2 2xl:py-20 py-10  mx-auto  relative   2xl:max-w-7xl">
 
                 {{ $slot }}
             </div>

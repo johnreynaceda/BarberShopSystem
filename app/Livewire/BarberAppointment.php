@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Livewire\Customer;
+namespace App\Livewire;
+
 
 use App\Models\Appointment;
 use App\Models\Barber;
@@ -25,7 +26,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class CustomerAppointment extends Component implements HasForms, HasTable
+class BarberAppointment extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -33,7 +34,7 @@ class CustomerAppointment extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Appointment::query()->where('user_id', auth()->user()->id))
+            ->query(Appointment::query()->where('barber_id', auth()->user()->barber->id))
             ->columns([
                 TextColumn::make('user.name')->label('CUSTOMER')->searchable(),
                 TextColumn::make('service.name')->label('SERVICE')->searchable(),
@@ -57,18 +58,18 @@ class CustomerAppointment extends Component implements HasForms, HasTable
             ])
             ->actions([
                 ActionGroup::make([
-                    // Action::make('accept')->color('success')->icon('heroicon-o-hand-thumb-up'),
-                    // Action::make('reject')->color('danger')->icon('heroicon-o-hand-thumb-down'),
+                    Action::make('accept')->color('success')->icon('heroicon-o-hand-thumb-up'),
+                    Action::make('reject')->color('danger')->icon('heroicon-o-hand-thumb-down'),
                     DeleteAction::make(),
                 ]),
             ])
             ->bulkActions([
                 // ...
-            ]) ->emptyStateHeading('No Appointment yet')->emptyStateDescription('Once you get Appointment, it will appear here.');
+            ]) ->emptyStateHeading('No Appointments yet')->emptyStateDescription('Once customer get an appointment, it will appear here.');
     }
 
     public function render()
     {
-        return view('livewire.customer.customer-appointment');
+        return view('livewire.barber-appointment');
     }
 }

@@ -18,6 +18,9 @@ Route::get('/dashboard', function () {
     case 'customer':
         return redirect()->route('customer.dashboard');
         break;
+    case 'barber':
+        return redirect()->route('barber.dashboard');
+        break;
 
     default:
         # code...
@@ -34,6 +37,9 @@ Route::prefix('administrator')->group(function(){
     Route::get('/shops', function(){
         return view('admin.shops');
     })->name('admin.shops');
+    Route::get('/users', function(){
+        return view('admin.users');
+    })->name('admin.users');
 });
 
 //customer
@@ -50,6 +56,12 @@ Route::prefix('customer')->group(function(){
     Route::get('/appointments', function(){
         return view('customer.appointments');
     })->name('customer.appointments');
+});
+
+Route::prefix('barber')->group(function(){
+    Route::get('/appointments', function(){
+        return view('barber.dashboard');
+    })->name('barber.dashboard');
 });
 
 

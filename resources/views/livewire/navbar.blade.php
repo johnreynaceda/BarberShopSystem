@@ -18,16 +18,27 @@
             <nav :class="{ 'flex': open, 'hidden': !open }"
                 class="flex-col items-center flex-grow hidden p-4 px-5 opacity-100 md:px-0 md:pb-0 md:flex md:justify-start md:flex-row lg:p-0 md:mt-0">
                 @if (auth()->check())
-                    <div class="md:ml-auto">
-                        <a class="{{ request()->routeIs('customer.dashboard') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                            href="{{ route('customer.dashboard') }}">Home </a>
-                        <a class="{{ request()->routeIs('customer.barber-shops') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                            href="{{ route('customer.barber-shops') }}">Barber Shops </a>
-                        <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                            href="{{ route('customer.appointments') }}">Appointments</a>
-                        <a class="px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                            href="#features">Notifications</a>
-                    </div>
+                    @if (auth()->user()->user_type == 'barber')
+                        <div class="md:ml-auto 2xl:mr-20 ">
+
+                            <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('customer.appointments') }}">Appointments({{ \App\Models\Appointment::where('barber_id', auth()->user()->barber->id)->where('status', 'pending')->get()->count() }})</a>
+                            <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('customer.appointments') }}">Transaction()</a>
+
+                        </div>
+                    @else
+                        <div class="md:ml-auto">
+                            <a class="{{ request()->routeIs('customer.dashboard') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('customer.dashboard') }}">Home </a>
+                            <a class="{{ request()->routeIs('customer.barber-shops') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('customer.barber-shops') }}">Barber Shops </a>
+                            <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('customer.appointments') }}">Appointments</a>
+                            <a class="px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="#features">Notifications</a>
+                        </div>
+                    @endif
                     <livewire:customer-userdropdown />
                 @else
                     <a class="px-4 py-2 text-xs text-gray-500 hover:text-black focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
