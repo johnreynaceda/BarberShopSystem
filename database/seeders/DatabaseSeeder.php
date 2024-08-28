@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Commision;
 use App\Models\Shop;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -33,6 +34,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'user_type' => 'shop manager',
             'shop_id' => $shop->id,
+        ]);
+
+        Commision::create([
+            'percentage' => 15,
         ]);
 
     }

@@ -23,7 +23,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
+<body class="font-sans text-gray-900 antialiased overflow-hidden">
     <div
         class="absolute text-stroke font-mont text-stroke-md opacity-20 text-gray-500 top-40 font-extrabold text-[10rem] -left-80">
         STYLESYNC

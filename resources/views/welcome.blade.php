@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
 
@@ -33,17 +33,9 @@
                     <a class="inline-flex items-center gap-3 text-xl font-bold tracking-tight text-black"
                         href="/">
                         <img src="{{ asset('images/stylesynclogo.png') }}" class="h-16" alt="">
-                    </a><button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
-                        @click="open = !open">
-                        <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"></path>
-                            <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
-                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
+                    </a>
+                    <x-button label="Login" right-icon="arrow-left-end-on-rectangle" class="2xl:hidden " slate
+                        href="{{ route('login') }}" />
                 </div>
                 <nav :class="{ 'flex': open, 'hidden': !open }"
                     class="flex-col items-center flex-grow hidden p-4 px-5 opacity-100 md:px-0 md:pb-0 md:flex md:justify-start md:flex-row lg:p-0 md:mt-0">
@@ -56,16 +48,16 @@
 
         <section class="scroll-mt-24 relative" id="features">
             <img src="{{ asset('images/bg1.jpg') }}"
-                class="absolute opacity-70 top-0 bottom-0 h-full w-full object-cover" alt="">
+                class="absolute opacity-60 top-0 bottom-0 h-full w-full object-cover" alt="">
             <div
-                class="absolute text-stroke font-mont text-stroke-md opacity-10 text-gray-500 top-40 font-extrabold text-[10rem] -left-80">
+                class="absolute text-stroke font-mont text-stroke-md opacity-10 text-gray-500 top-40 font-extrabold 2xl:text-[10rem] -left-80">
                 STYLESYNC
             </div>
             <div class="px-8 py-24 pb-96 mx-auto text-center relative md:px-12 lg:px-32 max-w-7xl">
                 <div>
-                    <p class="mt-12 text-6xl font-semibold  text-white ">
+                    <p class="mt-12 2xl:text-6xl text-4xl font-semibold  text-white ">
                         Syncing You with the Best Barbershops
-                        <span class="text-gray-200 tracking-tighter text-3xl md:block">Effortlessly find the best
+                        <span class="text-gray-300 tracking-tighter text-3xl md:block">Effortlessly find the best
                             barbers near
                             you.</span>
                     </p>
@@ -82,10 +74,13 @@
             </div>
             <div class="px-8 py-12 mx-auto md:px-12 lg:px-32 max-w-7xl">
                 <div>
-                    <p class="mt-12  font-semibold tracking-tighter text-white lg:text-5xl">
+                    <p class="mt-12  font-semibold tracking-tighter text-white 2xl:text-lg lg:text-5xl">
                         Our customers pretend
-                        <span class="text-gray-300 text-4xl md:block">they love us and our website</span>
+                        <span class="text-gray-300 hidden 2xl:block 2xl:text-4xl md:block">they love us and our
+                            website</span>
                     </p>
+                    <p class="text-gray-300 2xl:hidden  2xl:text-4xl md:block">they love us and our
+                        website</p>
                 </div>
                 <ul role="list"
                     class="grid max-w-2xl grid-cols-1 gap-6 mx-auto mt-12 sm:gap-4 lg:max-w-none lg:grid-cols-3">
@@ -101,7 +96,7 @@
                             <figcaption class="relative flex items-center justify-between pt-6 mt-6">
                                 <div>
                                     <div class="font-medium text-gray-900">Michael Andreuzza</div>
-                                    <div class="mt-1 text-sm text-gray-500">
+                                    <div class="mt-1 text-sm text-gray-100">
                                         Creator of Windstatic.com
                                     </div>
                                 </div>
@@ -125,7 +120,7 @@
                             <figcaption class="relative flex items-center justify-between pt-6 mt-6">
                                 <div>
                                     <div class="font-medium text-gray-900">Michael Andreuzza</div>
-                                    <div class="mt-1 text-sm text-gray-500">
+                                    <div class="mt-1 text-sm text-gray-100">
                                         Creator of Lexington Themes
                                     </div>
                                 </div>
@@ -150,7 +145,7 @@
                             <figcaption class="relative flex items-center justify-between pt-6 mt-6">
                                 <div>
                                     <div class="font-medium text-gray-900">Jenson Button</div>
-                                    <div class="mt-1 text-sm text-gray-500">
+                                    <div class="mt-1 text-sm text-gray-100">
                                         Founder of Benji and Tom
                                     </div>
                                 </div>
@@ -203,14 +198,41 @@
                 </div>
             </div>
         </section>
+        {{-- <div id="map" class="w-full h-96"></div>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            function initMap(lat, lon) {
+                var map = L.map('map').setView([lat, lon], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup('<b>You are here!</b>')
+                    .openPopup();
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    initMap(lat, lon);
+                }, function(error) {
+                    console.error('Error getting location: ', error);
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        </script> --}}
         <footer>
             <div class="h-full px-8 py-24 mx-auto md:px-12 lg:px-32 max-w-7xl">
                 <div class="pt-12 border-t border-gray-300 xl:grid xl:grid-cols-3 xl:gap-8">
-                    <div class="text-black">
+                    <div class="text-white">
                         <div class="inline-flex items-center gap-3">
-                            <p class="text-2xl font-bold uppercase">Appify</p>
+                            <p class="text-2xl font-bold uppercase">STYLESYNC</p>
                         </div>
-                        <p class="mt-2 text-sm text-gray-500 lg:w-4/5">
+                        <p class="mt-2 text-sm text-gray-100 lg:w-4/5">
                             Windstatic, basic and sturdy themes under the creative commons
                             license.
                         </p>
@@ -220,7 +242,7 @@
                             <h3 class="text-black">Information</h3>
                             <ul role="list" class="mt-4 space-y-2">
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-black">
+                                    <a href="#_" class="text-sm text-gray-100 hover:text-black">
                                         License
                                     </a>
                                 </li>
@@ -231,13 +253,13 @@
                             <ul role="list" class="mt-4 space-y-2">
                                 <li>
                                     <a href="https://twitter.com/lexingtonthemes"
-                                        class="text-sm text-gray-500 hover:text-black">
+                                        class="text-sm text-gray-100 hover:text-black">
                                         @lexingtonthemes
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://twitter.com/Mike_Andreuzza"
-                                        class="text-sm text-gray-500 hover:text-black">
+                                        class="text-sm text-gray-100 hover:text-black">
                                         @Mike_Andreuzza
                                     </a>
                                 </li>
@@ -248,7 +270,7 @@
                             <ul role="list" class="mt-4 space-y-2">
                                 <li>
                                     <a href="https://lexingtonthemes.com/"
-                                        class="text-sm text-gray-500 hover:text-black">
+                                        class="text-sm text-gray-100 hover:text-black">
                                         Lexington Themes
                                     </a>
                                 </li>
@@ -258,7 +280,7 @@
                 </div>
                 <div class="flex flex-col pt-12 md:flex-row md:items-center md:justify-between">
                     <p class="text-left">
-                        <span class="mx-auto mt-2 text-sm text-gray-500 lg:mx-0">
+                        <span class="mx-auto mt-2 text-sm text-gray-100 lg:mx-0">
                             © Windstatic. By:
                             <a class="text-accent-500 hover:text-accent-600"
                                 href="https://michaelandreuzza.com/">Michael Andreuzza</a>
@@ -269,6 +291,7 @@
             </div>
         </footer>
     </main>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     @filamentScripts
     @vite('resources/js/app.js')
 </body>

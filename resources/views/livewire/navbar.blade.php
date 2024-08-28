@@ -21,13 +21,13 @@
                     @if (auth()->user()->user_type == 'barber')
                         <div class="md:ml-auto 2xl:mr-20 ">
 
-                            <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                                href="{{ route('customer.appointments') }}">Appointments({{ \App\Models\Appointment::where('barber_id', auth()->user()->barber->id)->where('status', 'pending')->get()->count() }})</a>
-                            <a class="{{ request()->routeIs('customer.appointment') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
-                                href="{{ route('customer.appointments') }}">Transaction()</a>
+                            <a class="{{ request()->routeIs('barber.dashboard') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('barber.dashboard') }}">Appointments({{ \App\Models\Appointment::where('barber_id', auth()->user()->barber->id)->where('status', 'pending')->get()->count() }})</a>
+                            <a class="{{ request()->routeIs('barber.transactions') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
+                                href="{{ route('barber.transactions') }}">Transaction({{ \App\Models\Transaction::where('barber_id', auth()->user()->barber->id)->where('status', 'pending')->get()->count() }})</a>
 
                         </div>
-                    @else
+                    @elseif(auth()->user()->user_type == 'customer')
                         <div class="md:ml-auto">
                             <a class="{{ request()->routeIs('customer.dashboard') ? 'font-semibold' : '' }} px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
                                 href="{{ route('customer.dashboard') }}">Home </a>
@@ -38,6 +38,7 @@
                             <a class="px-2 py-2 text-sm  text-main hover:font-semibold hover:scale-75 focus:outline-none focus:shadow-none focus:text-black/90 md:ml-auto"
                                 href="#features">Notifications</a>
                         </div>
+                    @else
                     @endif
                     <livewire:customer-userdropdown />
                 @else

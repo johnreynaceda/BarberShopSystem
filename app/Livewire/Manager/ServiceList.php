@@ -62,7 +62,7 @@ class ServiceList extends Component implements HasForms, HasTable
                 )->form([
                     TextInput::make('service_name')->required(),
                     TextInput::make('amount')->numeric()->required(),
-                    Select::make('category')->options(ServiceCategory::all()->pluck('name', 'id'))
+                    Select::make('category')->options(ServiceCategory::where('shop_id', auth()->user()->shop_id)->pluck('name', 'id'))
                 ])->modalWidth('xl')->modalHeading('Add New Service'),
             ])
             ->columns([

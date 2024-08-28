@@ -21,4 +21,8 @@ class Barber extends Model
     public function appointments(){
         return $this->hasMany(Appointment::class);
     }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
 }

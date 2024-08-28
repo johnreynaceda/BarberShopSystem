@@ -40,6 +40,12 @@ Route::prefix('administrator')->group(function(){
     Route::get('/users', function(){
         return view('admin.users');
     })->name('admin.users');
+    Route::get('/barbers', function(){
+        return view('admin.barbers');
+    })->name('admin.barbers');
+    Route::get('/commission', function(){
+        return view('admin.commission');
+    })->name('admin.commission');
 });
 
 //customer
@@ -58,15 +64,18 @@ Route::prefix('customer')->group(function(){
     })->name('customer.appointments');
 });
 
-Route::prefix('barber')->group(function(){
+Route::prefix('barber')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/appointments', function(){
         return view('barber.dashboard');
     })->name('barber.dashboard');
+    Route::get('/transactions', function(){
+        return view('barber.transactions');
+    })->name('barber.transactions');
 });
 
 
 //manager
-Route::prefix('shop-manager')->group(function(){
+Route::prefix('shop-manager')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/dashboard', function(){
         return view('manager.dashboard');
     })->name('manager.dashboard');
@@ -76,6 +85,12 @@ Route::prefix('shop-manager')->group(function(){
     Route::get('/services', function(){
         return view('manager.services');
     })->name('manager.services');
+    Route::get('/appointments', function(){
+        return view('manager.appointments');
+    })->name('manager.appointments');
+    Route::get('/transactions', function(){
+        return view('manager.transactions');
+    })->name('manager.transactions');
 });
 
 

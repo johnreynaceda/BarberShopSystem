@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Barber;
 use App\Models\Shop;
 use App\Models\Shop\Product;
 use App\Models\User;
@@ -20,8 +21,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-
-class ShopList extends Component implements HasForms, HasTable
+class AllBarberList extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -29,26 +29,30 @@ class ShopList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Shop::query())->headerActions([
+            ->query(Barber::query())->headerActions([
                 CreateAction::make('new')->color('main')->icon('heroicon-o-plus')->action(
                     function($data){
-                        $shop = Shop::create([
-                            'name' => $data['name'],
-                            'contact' => $data['contact_number'],
-                            'address' => $data['address']
-                        ]);
 
-                        User::create([
-                            'name' => $data['name'],
+
+                       $user =  User::create([
+                            'name' => $data['firstname']. ' '.$data['lastname'],
                             'email' => $data['email'],
                             'password' => bcrypt($data['password']),
-                            'user_type' => 'shop manager',
-                           'shop_id' => $shop->id,
+                            'user_type' => 'barber',
+                        ]);
+                        Barber::create([
+                            'firstname' => $data['firstname'],
+                            'lastname' => $data['lastname'],
+                            'contact' => $data['contact_number'],
+                            'address' => $data['address'],
+                            'user_id' => $user->id,
+                            'shop_id' => auth()->user()->shop_id,
                         ]);
                     }
                 )->form([
                   Grid::make(2)->schema([
-                    TextInput::make('name')->columnSpan(2)->required(),
+                    TextInput::make('firstname')->required(),
+                    TextInput::make('lastname')->required(),
                     TextInput::make('contact_number')->required()->numeric()->prefix('#'),
                     TextInput::make('address')->required(),
                   ]),
@@ -58,10 +62,14 @@ class ShopList extends Component implements HasForms, HasTable
                         TextInput::make('password')->required()->password(),
                         TextInput::make('confirm_password')->required()->password()->same('password'),
                     ])
-                ])->modalWidth('xl')->modalHeading('Add New Shop'),
+                ])->modalWidth('xl')->modalHeading('Add New Barber'),
             ])
             ->columns([
-                TextColumn::make('name')->label('NAME')->searchable(),
+                TextColumn::make('id')->label('FULLNAME')->searchable()->formatStateUsing(
+                    fn($record) => $record->firstname. ' ' . $record->lastname
+                ),
+
+                TextColumn::make('user.email')->label('EMAIL')->searchable(),
                 TextColumn::make('contact')->label('CONTACT')->searchable(),
                 TextColumn::make('address')->LABEL('ADDRESS')->searchable(),
             ])
@@ -69,28 +77,24 @@ class ShopList extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                EditAction::make('edit')->color('success')->action(
-                    function($record, $data){
-                        $record->update([
-                            'name' => $data['name'],
-                            'contact' => $data['contact'],
-                            'address' => $data['address'],
-                        ]);
-                    }
-                )->form([
-                    TextInput::make('name')->columnSpan(2)->required(),
-                    TextInput::make('contact')->required()->numeric()->prefix('#'),
-                    TextInput::make('address')->required(),
-                ])->modalWidth('xl'),
-                DeleteAction::make('delete'),
+                // EditAction::make('edit')->color('success')->form([
+                //     Grid::make(2)->schema([
+                //         TextInput::make('firstname')->required(),
+                //         TextInput::make('lastname')->required(),
+                //         TextInput::make('contact')->required()->numeric()->prefix('#'),
+                //         TextInput::make('address')->required(),
+                //       ]),
+
+                // ])->modalWidth('xl')->modalHeading('Edit Barber'),
+                // DeleteAction::make('delete'),
             ])
             ->bulkActions([
                 // ...
-            ]) ->emptyStateHeading('No Shops yet')->emptyStateDescription('Once you write your first shop, it will appear here.');
+            ]) ->emptyStateHeading('No Barbers yet')->emptyStateDescription('Once you write your first barber, it will appear here.');
     }
 
     public function render()
     {
-        return view('livewire.admin.shop-list');
+        return view('livewire.admin.all-barber-list');
     }
 }

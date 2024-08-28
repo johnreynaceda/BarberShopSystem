@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Livewire;
-
+namespace App\Livewire\Manager;
 
 use App\Models\Appointment;
 use App\Models\Barber;
@@ -9,6 +8,7 @@ use App\Models\Shop;
 use App\Models\Shop\Product;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
@@ -27,16 +27,15 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class BarberAppointment extends Component implements HasForms, HasTable
+class ShopAppointmentList extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
 
-
     public function table(Table $table): Table
     {
         return $table
-            ->query(Appointment::query()->where('barber_id', auth()->user()->barber->id)->where('status', '!=', 'accepted'))
+            ->query(Appointment::query()->where('shop_id', auth()->user()->shop_id))
             ->columns([
                 TextColumn::make('user.name')->label('CUSTOMER')->searchable(),
                 TextColumn::make('service.name')->label('SERVICE')->searchable(),
@@ -71,7 +70,7 @@ class BarberAppointment extends Component implements HasForms, HasTable
                                 'service_name' => $record->service->name,
                                 'barber_name' => $record->barber->user->name,
                                 'barber_id' => $record->barber_id,
-                                'date' => $record->date,
+                                'date' => Carbon::parse($record->date),
                                 'amount' => $record->service->amount,
                                 'customer_type' => $record->customer_type,
                                'mode_of_payment' => $record->mode_of_payment,
@@ -85,7 +84,7 @@ class BarberAppointment extends Component implements HasForms, HasTable
                             ]);
                         }
                     ),
-                    DeleteAction::make(),
+                    // DeleteAction::make(),
                 ]),
             ])
             ->bulkActions([
@@ -95,6 +94,6 @@ class BarberAppointment extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.barber-appointment');
+        return view('livewire.manager.shop-appointment-list');
     }
 }
