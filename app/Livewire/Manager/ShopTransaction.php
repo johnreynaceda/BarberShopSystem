@@ -102,7 +102,7 @@ class ShopTransaction extends Component implements HasForms, HasTable
             ])
             ->bulkActions([
                 // ...
-            ]) ->emptyStateHeading('No Appointments yet')->emptyStateDescription('Once customer get an appointment, it will appear here.');
+            ]) ->emptyStateHeading('No Transactions yet!')->emptyStateDescription('Once customer get an transaction, it will appear here.');
     }
 
     public function updatedCash(){

@@ -7,10 +7,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Leaflet CSS -->
+
+
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
 
+    <!-- Scripts -->
     <style>
         [x-cloak] {
             display: none !important;
@@ -22,91 +26,172 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-sans antialiased overflow-x-hidden">
+<body class="font-sans antialiased">
 
-    <main class="bg-gradient-to-br from-gray-500  to-gray-700">
+
+    <div class="justify-center w-full mx-auto border-b bg-base-50">
         <livewire:navbar />
+    </div>
 
-        <section class="scroll-mt-24 relative" id="features">
-            <img src="{{ asset('images/bg1.jpg') }}"
-                class="absolute opacity-50 top-0 bottom-0 h-full w-full object-cover" alt="">
-            <div
-                class="absolute text-stroke font-mont text-stroke-md opacity-10 text-gray-500 top-40 font-extrabold text-[10rem] -left-80">
-                STYLESYNC
-            </div>
-            <div class="2xl:px-8 px-2 2xl:py-20 py-10  mx-auto  relative   2xl:max-w-7xl">
+    <section class="py-20">
+        <div class="2xl:px-5 px-2  mx-auto  max-w-7xl  relative">
+            {{ $slot }}
+        </div>
+    </section>
 
-                {{ $slot }}
-            </div>
-        </section>
+    <section>
+        <div class="px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
 
-
-        <footer>
-            <div class="h-full px-8 py-24 mx-auto md:px-12 lg:px-32 max-w-7xl">
-                <div class="pt-12 border-t border-gray-300 xl:grid xl:grid-cols-3 xl:gap-8">
-                    <div class="text-black">
-                        <div class="inline-flex items-center gap-3">
-                            <p class="text-2xl font-bold uppercase">Appify</p>
-                        </div>
-                        <p class="mt-2 text-sm text-gray-500 lg:w-4/5">
-                            Windstatic, basic and sturdy themes under the creative commons
-                            license.
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-8 mt-12 lg:grid-cols-3 lg:mt-0 xl:col-span-2">
-                        <div>
-                            <h3 class="text-black">Information</h3>
-                            <ul role="list" class="mt-4 space-y-2">
-                                <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-black">
-                                        License
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-black">Socials</h3>
-                            <ul role="list" class="mt-4 space-y-2">
-                                <li>
-                                    <a href="https://twitter.com/lexingtonthemes"
-                                        class="text-sm text-gray-500 hover:text-black">
-                                        @lexingtonthemes
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://twitter.com/Mike_Andreuzza"
-                                        class="text-sm text-gray-500 hover:text-black">
-                                        @Mike_Andreuzza
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="mt-12 md:mt-0">
-                            <h3 class="text-black">Premium Themes</h3>
-                            <ul role="list" class="mt-4 space-y-2">
-                                <li>
-                                    <a href="https://lexingtonthemes.com/"
-                                        class="text-sm text-gray-500 hover:text-black">
-                                        Lexington Themes
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="grid pt-6 mt-6 border-t grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-24">
+                <div class="space-y-4">
+                    <nav aria-labelledby="footer-heading-0">
+                        <h2 class="text-base leading-normal font-semibold text-base-900" id="footer-heading-0">
+                            Company
+                        </h2>
+                        <ul class="mt-4 space-y-4">
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    About
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Mission
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Leadership Team
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    History
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <div class="flex flex-col pt-12 md:flex-row md:items-center md:justify-between">
-                    <p class="text-left">
-                        <span class="mx-auto mt-2 text-sm text-gray-500 lg:mx-0">
-                            © Windstatic. By:
-                            <a class="text-accent-500 hover:text-accent-600"
-                                href="https://michaelandreuzza.com/">Michael Andreuzza</a>
-                            Demo Images: Respective owners.
-                        </span>
-                    </p>
+                <div class="space-y-4">
+                    <nav aria-labelledby="footer-heading-1">
+                        <h2 class="text-base leading-normal font-semibold text-base-900" id="footer-heading-1">
+                            Services
+                        </h2>
+                        <ul class="mt-4 space-y-4">
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Marketing
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Analytics
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Commerce
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Insights
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="space-y-4">
+                    <nav aria-labelledby="footer-heading-2">
+                        <h2 class="text-base leading-normal font-semibold text-base-900" id="footer-heading-2">
+                            Resources
+                        </h2>
+                        <ul class="mt-4 space-y-4">
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Documentation
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Guides
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Webinars
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    White Papers
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="space-y-4">
+                    <nav aria-labelledby="footer-heading-3">
+                        <h2 class="text-base leading-normal font-semibold text-base-900" id="footer-heading-3">
+                            Support &amp; Legal
+                        </h2>
+                        <ul class="mt-4 space-y-4">
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Pricing
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    API Status
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Live Chat
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-md leading-normal hover:text-accent-500 font-medium text-base-500"
+                                    href="#_">
+                                    Email Support
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-        </footer>
-    </main>
+            <div class="pt-6 mt-12 border-t flex flex-col md:flex-row items-center justify-between">
+                <a class="text-md leading-normal hover:text-accent-500 font-medium flex items-center gap-2 text-base-900"
+                    href="#_">
+                    <img class="h-7 2xl:h-12" src="{{ asset('images/stylesynclogo.png') }}" alt="#_" />
+
+                </a>
+                <h2 class="text-sm leading-normal font-medium text-base-400">
+                    Copyright © 2024 Stylesync. All rights reserved.
+                </h2>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     @filamentScripts
     @vite('resources/js/app.js')
 </body>

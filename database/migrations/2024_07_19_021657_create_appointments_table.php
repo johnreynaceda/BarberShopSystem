@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('mode_of_payment');
             $table->string('status')->default('pending');
             $table->string('customer_type');
+            $table->longText('reason_for_cancellation')->nullable();
             $table->timestamps();
         });
     }

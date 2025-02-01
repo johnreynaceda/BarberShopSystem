@@ -35,7 +35,9 @@ class ShopList extends Component implements HasForms, HasTable
                         $shop = Shop::create([
                             'name' => $data['name'],
                             'contact' => $data['contact_number'],
-                            'address' => $data['address']
+                            'address' => $data['address'],
+                            'latitude' => $data['latitude'],
+                            'longitude' => $data['longitude'],
                         ]);
 
                         User::create([
@@ -51,6 +53,8 @@ class ShopList extends Component implements HasForms, HasTable
                     TextInput::make('name')->columnSpan(2)->required(),
                     TextInput::make('contact_number')->required()->numeric()->prefix('#'),
                     TextInput::make('address')->required(),
+                    TextInput::make('latitude')->required(),
+                    TextInput::make('longitude')->required(),
                   ]),
                   Fieldset::make('ACCOUNT INFORMATION')
                     ->schema([
@@ -64,6 +68,8 @@ class ShopList extends Component implements HasForms, HasTable
                 TextColumn::make('name')->label('NAME')->searchable(),
                 TextColumn::make('contact')->label('CONTACT')->searchable(),
                 TextColumn::make('address')->LABEL('ADDRESS')->searchable(),
+                TextColumn::make('latitude')->LABEL('lATITUDE')->searchable(),
+                TextColumn::make('longitude')->LABEL('LONGITUDE')->searchable(),
             ])
             ->filters([
                 // ...
@@ -75,12 +81,17 @@ class ShopList extends Component implements HasForms, HasTable
                             'name' => $data['name'],
                             'contact' => $data['contact'],
                             'address' => $data['address'],
+                            'latitude' => $data['latitude'],
+                            'longitude' => $data['longitude'],
+
                         ]);
                     }
                 )->form([
                     TextInput::make('name')->columnSpan(2)->required(),
                     TextInput::make('contact')->required()->numeric()->prefix('#'),
                     TextInput::make('address')->required(),
+                    TextInput::make('latitude')->required(),
+                    TextInput::make('longitude')->required(),
                 ])->modalWidth('xl'),
                 DeleteAction::make('delete'),
             ])

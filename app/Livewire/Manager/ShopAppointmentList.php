@@ -52,6 +52,7 @@ class ShopAppointmentList extends Component implements HasForms, HasTable
                     'pending' => 'warning',
                     'accepted' => 'success',
                     'rejected' => 'danger',
+                    'cancelled' => 'danger',
                 }),
             ])
             ->filters([
@@ -85,7 +86,9 @@ class ShopAppointmentList extends Component implements HasForms, HasTable
                         }
                     ),
                     // DeleteAction::make(),
-                ]),
+                ])->hidden(
+                    fn($record) => $record->status == 'rejected' || $record->status == 'cancelled'
+                ),
             ])
             ->bulkActions([
                 // ...

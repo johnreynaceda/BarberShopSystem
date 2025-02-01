@@ -65,7 +65,7 @@ class BarberTransaction extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Transaction::query()->where('barber_id', auth()->user()->barber->id))->headerActions([
+            ->query(Transaction::query()->where('barber_id', auth()->user()->barber->id)->where('status', 'pending'))->headerActions([
                Action::make('add_transaction')->icon('heroicon-o-plus')->color('main')->action(
                 function($record){
                     $this->add_modal = true;

@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
 
 
 //admin
-Route::prefix('administrator')->group(function(){
+Route::prefix('administrator')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/dashboard', function(){
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -49,7 +49,7 @@ Route::prefix('administrator')->group(function(){
 });
 
 //customer
-Route::prefix('customer')->group(function(){
+Route::prefix('customer')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/dashboard', function(){
         return view('customer.dashboard');
     })->name('customer.dashboard');
@@ -91,6 +91,15 @@ Route::prefix('shop-manager')->middleware(['auth', 'verified'])->group(function(
     Route::get('/transactions', function(){
         return view('manager.transactions');
     })->name('manager.transactions');
+    Route::get('/incomes', function(){
+        return view('manager.incomes');
+    })->name('manager.incomes');
+    Route::get('/reports', function(){
+        return view('manager.reports');
+    })->name('manager.reports');
+    Route::get('/commissions', function(){
+        return view('manager.commissions');
+    })->name('manager.commissions');
 });
 
 
