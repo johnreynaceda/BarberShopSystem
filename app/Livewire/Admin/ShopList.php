@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\BarberCommission;
 use App\Models\Shop;
 use App\Models\Shop\Product;
 use App\Models\User;
@@ -46,6 +47,11 @@ class ShopList extends Component implements HasForms, HasTable
                             'password' => bcrypt($data['password']),
                             'user_type' => 'shop manager',
                            'shop_id' => $shop->id,
+                        ]);
+
+                        BarberCommission::create([
+                            'shop_id' => $shop->id,
+                            'percent' => 0
                         ]);
                     }
                 )->form([

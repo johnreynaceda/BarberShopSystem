@@ -65,7 +65,7 @@ class BarberTransaction extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Transaction::query()->where('barber_id', auth()->user()->barber->id)->where('status', 'pending'))->headerActions([
+            ->query(Transaction::query()->where('barber_id', auth()->user()->barber->id))->headerActions([
                Action::make('add_transaction')->icon('heroicon-o-plus')->color('main')->action(
                 function($record){
                     $this->add_modal = true;
@@ -104,13 +104,13 @@ class BarberTransaction extends Component implements HasForms, HasTable
                         function($record){
                             $record->update([
                                 'status' => 'done',
-                                'barber_commission' => ($record->amount * 0.20),
+                                'barber_commission' => ($record->amount * (auth()->user()->barber->shop->barberCommission->percent /100)),
                                 'admin_commission' =>  $record->customer_type  == 'Online' ? ($record->amount * (Commision::first()->percentage / 100)) : 0,
                             ]);
 
                         }
-                    ),
-                    DeleteAction::make(),
+                    )->visible(fn($record) => $record->status != 'done'),
+                    DeleteAction::make()->visible(fn($record) => $record->status != 'done'),
                 ]),
             ])
             ->bulkActions([

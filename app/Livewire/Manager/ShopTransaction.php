@@ -147,7 +147,7 @@ class ShopTransaction extends Component implements HasForms, HasTable
         'amount' => $this->amount,
        'mode_of_payment' => $this->mode_of_payment,
        'customer_type' => 'Walk-In',
-       'barber_commission' => (20 / 100) * $this->amount,
+       'barber_commission' => (auth()->user()->barber->shop->barberCommission->percent / 100) * $this->amount,
        'admin_commission' => 0,
        ]);
 

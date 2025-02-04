@@ -12,6 +12,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
@@ -27,12 +28,31 @@ class CommissionList extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    public $commission = 0;
+
+    public function mount(){
+        $this->commission = auth()->user()->shop->barberCommission->percent ?? 0;
+    }
+
      public function table(Table $table): Table
     {
         return $table
             ->query(Transaction::query()->where('status', 'done')->whereHas('barber', function($record){
                 $record->where('shop_id', auth()->user()->shop_id);
-            }))->columns([
+            }))->headerActions([
+                Action::make('commission')->label('Manage Commission')->action(
+                    function($data){
+                        $this->commission = $data['percent'];
+                       if (auth()->user()->shop->barberCommission) {
+                        auth()->user()->shop->barberCommission->update(['percent' => $data['percent']]);
+                       }else{
+                        auth()->user()->shop->barberCommission()->create(['percent' => $data['percent']]);
+                       }
+                    }
+                )->form([
+                    TextInput::make('percent')->numeric()->prefix('%'),
+                ])->modalWidth('xl')
+            ])->columns([
                 TextColumn::make('customer_name')->label('CUSTOMER')->searchable(),
                 TextColumn::make('service_name')->label('SERVICE')->searchable(),
                 TextColumn::make('barber_name')->label('BARBER')->searchable(),

@@ -8,6 +8,14 @@
         <div x-data="mapComponent()" x-init="init()">
             <!-- Barbershop buttons -->
             <div class=" hidden 2xl:block mb-3">
+                <div class="flex justify-end mb-5 z-50 relative">
+                    <div class="w-48">
+                        {{ $this->form }}
+                    </div>
+                </div>
+
+
+
                 <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" slides-per-view="5"
                     space-between="5" free-mode="true">
 
@@ -15,26 +23,48 @@
                         <swiper-slide>
                             <button
                                 @click="centerOnMarker({{ $item->latitude }}, {{ $item->longitude }}); selectShop({{ $item->id }})"
-                                class="p-2 border px-4 rounded-2xl font-semibold flex space-x-2 hover:bg-main hover:text-white hover:scale-95 transition duration-150">
+                                class="p-2 border px-4 rounded-2xl font-semibold  hover:bg-main hover:text-white hover:scale-95 transition duration-150">
 
-                                <span>{{ $item->name }}</span>
+                                <div class="flex space-x-2 items-center">
+                                    <span>{{ $item->name }}</span>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-square-scissors">
-                                    <rect width="20" height="20" x="2" y="2" rx="2" />
-                                    <circle cx="8" cy="8" r="2" />
-                                    <path d="M9.414 9.414 12 12" />
-                                    <path d="M14.8 14.8 18 18" />
-                                    <circle cx="8" cy="16" r="2" />
-                                    <path d="m18 6-8.586 8.586" />
-                                </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-square-scissors">
+                                        <rect width="20" height="20" x="2" y="2" rx="2" />
+                                        <circle cx="8" cy="8" r="2" />
+                                        <path d="M9.414 9.414 12 12" />
+                                        <path d="M14.8 14.8 18 18" />
+                                        <circle cx="8" cy="16" r="2" />
+                                        <path d="m18 6-8.586 8.586" />
+                                    </svg>
+                                </div>
 
+                                @if ($service)
+                                    @if ($item->serviceCategories->isNotEmpty())
+                                        @foreach ($item->serviceCategories as $category)
+                                            @if ($category->services->isNotEmpty())
+                                                @foreach ($category->services as $service)
+                                                    <div class="mt-1 flex text-sm font-normal">
+                                                        {{ $service->name }} Amount:
+                                                        &#8369;{{ number_format($service->amount, 2) }}
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                            @endif
+                                        @endforeach
+                                    @else
+                                    @endif
+                                @endif
                             </button>
                         </swiper-slide>
                     @endforeach
                 </swiper-container>
+
+
+
+
             </div>
             <div class=" 2xl:hidden  mb-3">
                 <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" slides-per-view="3"
@@ -45,7 +75,8 @@
                             <button
                                 @click="centerOnMarker({{ $item->latitude }}, {{ $item->longitude }}); selectShop({{ $item->id }})"
                                 class="p-2 border px-4 text-sm uppercase rounded-2xl font-semibold flex space-x-2 hover:bg-main hover:text-white hover:scale-95 transition duration-150">
-                                <span>{{ $item->name }}</span>
+                                <h1>{{ $item->name }}</h1>
+                                <h1>sdsds</h1>
                             </button>
                         </swiper-slide>
                     @endforeach
@@ -54,7 +85,11 @@
             <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 
             <!-- Map container -->
-            <div id="map" style="width: 100%; height: 400px;"></div>
+            <div wire:ignore>
+                <div id="map" style="width: 100%; height: 400px;" class="z-10"></div>
+            </div>
+
+
         </div>
     </div>
 

@@ -21,8 +21,15 @@ class Shop extends Model
     public function services(){
         return $this->hasMany(Service::class);
     }
+    public function serviceCategories(){
+        return $this->hasMany(ServiceCategory::class);
+    }
 
     public function appointments(){
         return $this->hasMany(Appointment::class);
+    }
+
+    public function barberCommission(){
+        return $this->hasOne(BarberCommission::class);
     }
 }

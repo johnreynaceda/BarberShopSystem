@@ -48,7 +48,6 @@ class UserList extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                EditAction::make('edit')->color('success'),
                 DeleteAction::make('delete'),
             ])
             ->bulkActions([

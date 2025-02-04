@@ -16,7 +16,7 @@
         @case(1)
             <div class="mt-10">
                 <div>
-                    <h1 class="text-gray-300">Please select the service...</h1>
+                    <h1 class="text-gray-500">Please select the service...</h1>
                     <div class="mt-5 grid 2xl:grid-cols-6 grid-cols-4 gap-3  2xl:gap-5">
                         @foreach ($services as $service)
                             <x-button label="{{ $service->name }}" slate class="font-semibold"
@@ -28,7 +28,7 @@
                             @forelse ($servicess as $service_item)
                                 <div wire:click="$set('services_id', {{ $service_item->id }})"
                                     spinner="$set('services_id', {{ $service_item->id }}"
-                                    class="{{ $services_id == $service_item->id ? 'bg-white text-gray-500' : 'text-white ' }} border rounded-xl hover:bg-white hover:scale-95 cursor-pointer hover:text-gray-700 p-5 grid place-content-center">
+                                    class="{{ $services_id == $service_item->id ? 'bg-gray-700 text-white' : ' ' }} border rounded-xl hover:bg-gray-600 active:bg-gray-700 active:text-white hover:text-white hover:scale-95 cursor-pointer  p-5 grid place-content-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -61,11 +61,11 @@
         @case(2)
             <div class="mt-10">
                 <div>
-                    <h1 class="text-gray-300">Please choose the barber...</h1>
+                    <h1 class="text-gray-500">Please choose the barber...</h1>
                     <div class="mt-5 grid 2xl:grid-cols-5 grid-cols-2 gap-3  2xl:gap-5">
                         @foreach ($barbers as $barber)
                             <div wire:click="$set('barber_id', {{ $barber->id }})"
-                                class="{{ $barber_id == $barber->id ? 'bg-white text-gray-500' : 'text-white ' }} border rounded-xl hover:bg-white hover:scale-95 cursor-pointer hover:text-gray-700 p-5 grid place-content-center">
+                                class="{{ $barber_id == $barber->id ? 'bg-gray-600 text-white' : 'text-gray-700 ' }} border rounded-xl hover:bg-gray-600 hover:text-white hover:scale-95 cursor-pointer hover:text-gray-700 p-5 grid place-content-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class=""
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
@@ -97,7 +97,7 @@
     @case(3)
         <div class="mt-10">
             <div>
-                <h1 class="text-gray-300">Please choose the date and time...</h1>
+                <h1 class="text-gray-500">Please choose the date and time...</h1>
                 <div class="w-80">
                     <x-datetime-picker wire:model.live="date_of_appointment" without-timezone placeholder="Appointment Date" />
 

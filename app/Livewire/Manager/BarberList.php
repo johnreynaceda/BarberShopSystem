@@ -48,6 +48,8 @@ class BarberList extends Component implements HasForms, HasTable
                             'user_id' => $user->id,
                             'shop_id' => auth()->user()->shop_id,
                         ]);
+
+                    
                     }
                 )->form([
                   Grid::make(2)->schema([

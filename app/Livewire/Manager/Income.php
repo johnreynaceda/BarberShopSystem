@@ -70,19 +70,19 @@ class Income extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                ActionGroup::make([
-                    Action::make('done')->label('Done Transaction')->color('success')->icon('heroicon-s-check-badge')->action(
-                        function($record){
-                            $record->update([
-                                'status' => 'done',
-                                'barber_commission' => ($record->amount * 0.20),
-                                'admin_commission' =>  $record->customer_type  == 'Online' ? ($record->amount * (Commision::first()->percentage / 100)) : 0,
-                            ]);
+                // ActionGroup::make([
+                //     Action::make('done')->label('Done Transaction')->color('success')->icon('heroicon-s-check-badge')->action(
+                //         function($record){
+                //             $record->update([
+                //                 'status' => 'done',
+                //                 'barber_commission' => ($record->amount * 0.20),
+                //                 'admin_commission' =>  $record->customer_type  == 'Online' ? ($record->amount * (Commision::first()->percentage / 100)) : 0,
+                //             ]);
 
-                        }
-                    ),
-                    DeleteAction::make(),
-                ]),
+                //         }
+                //     ),
+                //     DeleteAction::make(),
+                // ]),
             ])
             ->bulkActions([
                 // ...

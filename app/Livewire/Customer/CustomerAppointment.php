@@ -42,7 +42,7 @@ class CustomerAppointment extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Appointment::query()->where('user_id', auth()->user()->id))
+            ->query(Appointment::query()->where('user_id', auth()->user()->id)->orderByDesc('created_at'))
             ->columns([
                 TextColumn::make('user.name')->label('CUSTOMER')->searchable(),
                 TextColumn::make('service.name')->label('SERVICE')->searchable(),

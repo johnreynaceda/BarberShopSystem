@@ -77,14 +77,14 @@ class ShopAppointmentList extends Component implements HasForms, HasTable
                                'mode_of_payment' => $record->mode_of_payment,
                             ]);
                         }
-                    ),
+                    )->hidden(fn($record) => $record->status != ' pending'),
                     Action::make('reject')->color('danger')->icon('heroicon-o-hand-thumb-down')->action(
                         function($record){
                             $record->update([
                                 'status' => 'rejected',
                             ]);
                         }
-                    ),
+                    )->hidden(fn($record) => $record->status != ' pending'),
                     // DeleteAction::make(),
                 ])->hidden(
                     fn($record) => $record->status == 'rejected' || $record->status == 'cancelled'
