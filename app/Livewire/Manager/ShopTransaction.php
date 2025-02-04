@@ -91,8 +91,8 @@ class ShopTransaction extends Component implements HasForms, HasTable
                         function($record){
                             $record->update([
                                 'status' => 'done',
-                                'barber_commission' => ($record->amount * 0.20) ,
-                                'admin_commission' => $record->customer_type == 'Online' ? ($record->amount * (Commision::first()->percentage / 100)) : ($record->amount * 0.20) ,
+                                'barber_commission' => ($record->amount * ((auth()->user()->shop->barberCommission->percent ?? 0) / 100)) ,
+                                'admin_commission' => $record->customer_type == 'Online' ? ($record->amount * (Commision::first()->percentage / 100)) : ($record->amount * ((auth()->user()->shop->barberCommission->percent ?? 0) /100)) ,
                             ]);
 
                         }
@@ -147,7 +147,7 @@ class ShopTransaction extends Component implements HasForms, HasTable
         'amount' => $this->amount,
        'mode_of_payment' => $this->mode_of_payment,
        'customer_type' => 'Walk-In',
-       'barber_commission' => (auth()->user()->barber->shop->barberCommission->percent / 100) * $this->amount,
+       'barber_commission' => ((auth()->user()->shop->barberCommission->percent ?? 0) / 100) * $this->amount,
        'admin_commission' => 0,
        ]);
 
