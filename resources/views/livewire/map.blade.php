@@ -25,7 +25,7 @@
                                 @click="centerOnMarker({{ $item->latitude }}, {{ $item->longitude }}); selectShop({{ $item->id }})"
                                 class="p-2 border px-4 rounded-2xl font-semibold  hover:bg-main hover:text-white hover:scale-95 transition duration-150">
 
-                                <div class="flex space-x-2 items-center">
+                                <div class="flex space-x-2 items-center s">
                                     <span>{{ $item->name }}</span>
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
