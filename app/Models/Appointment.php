@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,19 +9,28 @@ class Appointment extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function barber(){
+    public function barber()
+    {
         return $this->belongsTo(Barber::class);
     }
 
-    public function shop(){
+    public function shop()
+    {
         return $this->belongsTo(Shop::class);
     }
 
-    public function service(){
+    public function service()
+    {
         return $this->belongsTo(Service::class);
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
     }
 }

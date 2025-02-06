@@ -67,16 +67,37 @@
 
             </div>
             <div class=" 2xl:hidden  mb-3">
-                <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" slides-per-view="3"
+                <div class="flex justify-end mb-5 z-50 relative">
+                    <div class="w-48">
+                        {{ $this->form }}
+                    </div>
+                </div>
+
+                <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" slides-per-view="1"
                     space-between="2" free-mode="true">
 
                     @foreach ($markers as $item)
                         <swiper-slide>
                             <button
                                 @click="centerOnMarker({{ $item->latitude }}, {{ $item->longitude }}); selectShop({{ $item->id }})"
-                                class="p-2 border px-4 text-sm uppercase rounded-2xl font-semibold flex space-x-2 hover:bg-main hover:text-white hover:scale-95 transition duration-150">
-                                <h1>{{ $item->name }}</h1>
-                                <h1>sdsds</h1>
+                                class="p-2 border px-4 text-sm uppercase rounded-2xl font-semibold  hover:bg-main hover:text-white hover:scale-95 transition duration-150">
+                                <h1 class="text-xs">{{ $item->name }}</h1>
+                                @if ($service)
+                                    @if ($item->serviceCategories->isNotEmpty())
+                                        @foreach ($item->serviceCategories as $category)
+                                            @if ($category->services->isNotEmpty())
+                                                @foreach ($category->services as $service)
+                                                    <div class="mt-1 flex text-xs font-normal">
+                                                        {{ $service->name }} Amount:
+                                                        &#8369;{{ number_format($service->amount, 2) }}
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                            @endif
+                                        @endforeach
+                                    @else
+                                    @endif
+                                @endif
                             </button>
                         </swiper-slide>
                     @endforeach

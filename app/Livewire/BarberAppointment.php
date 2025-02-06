@@ -59,6 +59,7 @@ class BarberAppointment extends Component implements HasForms, HasTable
                             ]);
 
                             Transaction::create([
+                                'appointment_id'  => $record->id,
                                 'customer_name'   => $record->user->name,
                                 'service_name'    => $record->service->name,
                                 'barber_name'     => $record->barber->user->name,
