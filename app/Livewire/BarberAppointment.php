@@ -104,7 +104,7 @@ class BarberAppointment extends Component implements HasForms, HasTable
                             flash()->success('Done Transaction');
 
                         }
-                    ),
+                    )->visible(fn($record) => $record->status === 'pending'),
                     Action::make('reject')->color('danger')->icon('heroicon-o-hand-thumb-down')->action(
                         function ($record) {
                             $record->update([
@@ -148,7 +148,7 @@ class BarberAppointment extends Component implements HasForms, HasTable
                             flash()->success('Reject Transaction');
 
                         }
-                    ),
+                    )->visible(fn($record) => $record->status === 'pending'),
                     DeleteAction::make(),
                 ]),
             ])
