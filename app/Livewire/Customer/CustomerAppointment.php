@@ -63,6 +63,8 @@ class CustomerAppointment extends Component implements HasForms, HasTable
                                 'rate'           => $this->stars,
                             ]);
                         }
+                    )->hidden(
+                        fn($record) => Feedback::where('appointment_id', $record->id)->exists()
                     ),
                     Action::make('cancel')->label('Cancel Appointment')->visible(fn($record) => $record->status == 'pending')->color('danger')->icon('heroicon-o-x-mark')->action(
                         function ($record, $data) {

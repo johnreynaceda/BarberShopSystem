@@ -25,7 +25,8 @@
                     </div>
                     <div x-ref="printContainer">
                         <div class="mt-10 mb-3">
-                            <h1 class="text-2xl uppercase">{{ $type }} INCOME REPORT</h1>
+                            <h1 class=" uppercase font-bold text-xl">{{ auth()->user()->shop->name }}</h1>
+                            <h1 class=" leading-3 text-sm uppercase">{{ $type }} INCOME REPORT</h1>
                         </div>
                         <table id="example" style="width:100%">
                             <thead class="font-normal">
@@ -87,6 +88,12 @@
 
                             </tbody>
                         </table>
+                        <div class="mt-10">
+                            <div class="w-64 text-center">
+                                <h1 class="border-b-2 text-transparent border-black">asdasdasdasdasdasdasdasd</h1>
+                                <span class="font-bold text-center">SHOP MANAGER</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-5">
                         <x-button label="Print Report" icon="printer" slate
@@ -104,6 +111,7 @@
                     </div>
                     <div x-ref="printContainer">
                         <div class="mt-10 mb-3">
+                            <h1 class=" uppercase font-bold text-xl">{{ auth()->user()->shop->name }}</h1>
                             <h1 class="text-2xl uppercase">BARBER'S INFORMATION</h1>
                         </div>
                         <table id="example" style="width:100%">

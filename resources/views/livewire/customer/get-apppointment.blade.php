@@ -91,6 +91,55 @@
                     @endif
                 </div>
             </div>
+            <div class="mt-20">
+                <section class="flex items-center justify-center py-20 bg-white min-w-screen">
+                    <div class="px-16 bg-white">
+                        <div class="container flex flex-col items-start mx-auto lg:items-center">
+                            <p class="relative flex items-start justify-start w-full text-lg font-bold tracking-wider text-purple-500 uppercase lg:justify-center lg:items-center"
+                                data-primary="purple-500">Don't just take our word for it</p>
+
+
+                            <h2
+                                class="relative flex items-start justify-start w-full max-w-3xl text-3xl font-bold lg:justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    class="absolute right-0 hidden w-12 h-12 -mt-2 -mr-16 text-gray-200 lg:inline-block"
+                                    viewBox="0 0 975.036 975.036">
+                                    <path
+                                        d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z">
+                                    </path>
+                                </svg>
+                                See what others are saying
+                            </h2>
+                            <div class="block w-full h-0.5 max-w-lg mt-6 bg-purple-100 rounded-full" data-primary="purple-600">
+                            </div>
+
+                            <div class="items-center justify-center w-full mt-12 mb-4 lg:flex">
+                                @forelse ($feedbacks as $item)
+                                    <div class="flex flex-col items-start justify-start w-full h-auto mb-12 lg:w-1/3 lg:mb-0">
+                                        <blockquote class="mt-8 text-lg text-gray-500">"{{ $item->feedback }}"</blockquote>
+                                        <div class="flex space-x-2">
+                                            <span>{{ $item->rate }}</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                class="text-yellow-500 h-5 w-5" fill="currentColor">
+                                                <path
+                                                    d="M11.9998 17L6.12197 20.5902L7.72007 13.8906L2.48926 9.40983L9.35479 8.85942L11.9998 2.5L14.6449 8.85942L21.5104 9.40983L16.2796 13.8906L17.8777 20.5902L11.9998 17Z">
+                                                </path>
+                                            </svg>
+
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div>
+                                        <h1 class="text-gray-500">No feedbacks yet...</h1>
+                                    </div>
+                                @endforelse
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
     @break
 
@@ -101,6 +150,18 @@
                 <div class="w-80">
                     <x-datetime-picker wire:model.live="date_of_appointment" without-timezone placeholder="Appointment Date" />
 
+                    <div class="mt-5">
+                        <h1>Schedules:</h1>
+                        <div class="mt-2">
+                            <ul class="space-y-1">
+                                @forelse ($appointments as $item)
+                                    <li>{{ \Carbon\Carbon::parse($item->date)->format('F d, Y h:i A') }}</li>
+                                @empty
+                                    <li>No record...</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -121,7 +182,8 @@
         <div class="2xl:w-[30rem]">
             <div class="w-full grid grid-cols-4 gap-2">
                 <h1 class="col-span-2">Category:</h1>
-                <h1 class="col-span-2">{{ \App\Models\ServiceCategory::where('id', $service_id)->first()->name ?? '' }}
+                <h1 class="col-span-2">
+                    {{ \App\Models\ServiceCategory::where('id', $service_id)->first()->name ?? '' }}
                 </h1>
                 <h1 class="col-span-2">Price:</h1>
                 <h1 class="col-span-2">

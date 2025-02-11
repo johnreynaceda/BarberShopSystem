@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,4 +9,9 @@ class Feedback extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
 }

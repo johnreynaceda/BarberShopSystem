@@ -33,4 +33,9 @@ class Appointment extends Model
     {
         return $this->hasOne(Transaction::class);
     }
+
+    public function feedback()
+    {
+        return $this->hasOne(Feedback::class);
+    }
 }
